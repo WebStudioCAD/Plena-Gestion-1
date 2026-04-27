@@ -1,0 +1,813 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Plena Gestión – Lo Hacemos Simple</title>
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@300;400;600;700;800&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --navy:    #0d2b4e;
+    --blue:    #1565c0;
+    --blue-md: #1e88e5;
+    --teal:    #00897b;
+    --green:   #2e7d32;
+    --green-lt:#43a047;
+    --mint:    #e8f5e9;
+    --sky:     #e3f2fd;
+    --white:   #ffffff;
+    --gray:    #f4f7fb;
+    --text:    #1a2a3a;
+    --muted:   #5a6e82;
+    --border:  #d0dce8;
+    --radius:  14px;
+    --shadow:  0 8px 32px rgba(13,43,78,.10);
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: 'DM Sans', sans-serif;
+    color: var(--text);
+    background: var(--white);
+    line-height: 1.65;
+    overflow-x: hidden;
+  }
+
+  /* ── NAV ── */
+  nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    background: rgba(13,43,78,.96);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid rgba(255,255,255,.08);
+    padding: 0 5%;
+    display: flex; align-items: center; justify-content: space-between;
+    height: 68px;
+    transition: box-shadow .3s;
+  }
+  nav.scrolled { box-shadow: 0 4px 24px rgba(0,0,0,.25); }
+
+  .nav-brand {
+    display: flex; align-items: center; gap: 12px;
+    text-decoration: none;
+  }
+  .nav-logo-circle {
+    width: 42px; height: 42px; border-radius: 50%;
+    background: linear-gradient(135deg, var(--blue-md), var(--teal));
+    display: flex; align-items: center; justify-content: center;
+    font-family: 'Sora', sans-serif; font-weight: 800;
+    color: #fff; font-size: 15px; letter-spacing: .5px;
+    flex-shrink: 0;
+  }
+  .nav-brand-text { color: #fff; }
+  .nav-brand-text span { display: block; }
+  .nav-brand-text .t1 { font-family: 'Sora', sans-serif; font-weight: 700; font-size: 15px; line-height: 1.1; }
+  .nav-brand-text .t2 { font-size: 10px; text-transform: uppercase; letter-spacing: 1.8px; color: var(--green-lt); font-weight: 300; }
+
+  .nav-links {
+    display: flex; gap: 32px; list-style: none;
+  }
+  .nav-links a {
+    color: rgba(255,255,255,.78);
+    text-decoration: none; font-size: 13.5px; font-weight: 500;
+    letter-spacing: .3px;
+    transition: color .2s;
+    position: relative;
+  }
+  .nav-links a::after {
+    content: ''; position: absolute; bottom: -4px; left: 0; right: 0;
+    height: 2px; background: var(--green-lt);
+    transform: scaleX(0); transition: transform .25s;
+    border-radius: 2px;
+  }
+  .nav-links a:hover { color: #fff; }
+  .nav-links a:hover::after { transform: scaleX(1); }
+
+  .nav-cta {
+    background: linear-gradient(135deg, var(--green-lt), var(--teal));
+    color: #fff !important;
+    padding: 9px 22px;
+    border-radius: 8px;
+    font-weight: 600 !important;
+    font-size: 13px !important;
+    transition: opacity .2s, transform .2s !important;
+  }
+  .nav-cta:hover { opacity: .92; transform: translateY(-1px); }
+  .nav-cta::after { display: none !important; }
+
+  .hamburger {
+    display: none; flex-direction: column; gap: 5px;
+    cursor: pointer; padding: 6px;
+  }
+  .hamburger span {
+    width: 24px; height: 2px; background: #fff;
+    border-radius: 2px; transition: all .3s;
+  }
+
+  .mobile-menu {
+    display: none; flex-direction: column;
+    position: fixed; top: 68px; left: 0; right: 0;
+    background: var(--navy);
+    padding: 20px 5% 28px;
+    border-bottom: 1px solid rgba(255,255,255,.1);
+    z-index: 99;
+  }
+  .mobile-menu.open { display: flex; }
+  .mobile-menu a {
+    color: rgba(255,255,255,.8); text-decoration: none;
+    padding: 12px 0; font-size: 15px; border-bottom: 1px solid rgba(255,255,255,.06);
+  }
+  .mobile-menu a:last-child { border: none; margin-top: 12px; text-align: center; }
+
+  /* ── HERO ── */
+  #hero {
+    min-height: 100vh;
+    background:
+      linear-gradient(160deg, rgba(13,43,78,.92) 0%, rgba(21,101,192,.80) 50%, rgba(0,137,123,.60) 100%),
+      url("data:image/svg+xml,%3Csvg width='100' height='100' viewBox='0 0 100 100' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='%23ffffff' fill-opacity='0.03'%3E%3Ccircle cx='50' cy='50' r='40'/%3E%3Ccircle cx='0' cy='0' r='30'/%3E%3Ccircle cx='100' cy='100' r='30'/%3E%3C/g%3E%3C/svg%3E");
+    background-size: cover;
+    display: flex; align-items: center; justify-content: center;
+    text-align: center;
+    padding: 120px 5% 80px;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .hero-bg-shapes {
+    position: absolute; inset: 0; pointer-events: none; overflow: hidden;
+  }
+  .hero-shape {
+    position: absolute; border-radius: 50%;
+    background: rgba(255,255,255,.04);
+    animation: float 8s ease-in-out infinite;
+  }
+  .hs1 { width: 500px; height: 500px; top: -100px; right: -100px; animation-delay: 0s; }
+  .hs2 { width: 300px; height: 300px; bottom: -80px; left: -80px; animation-delay: 3s; }
+  .hs3 { width: 200px; height: 200px; top: 40%; left: 10%; animation-delay: 5s; }
+
+  @keyframes float {
+    0%,100% { transform: translateY(0) scale(1); }
+    50% { transform: translateY(-24px) scale(1.04); }
+  }
+
+  .hero-content { position: relative; z-index: 2; max-width: 780px; }
+
+  .hero-badge {
+    display: inline-flex; align-items: center; gap: 8px;
+    background: rgba(255,255,255,.10);
+    border: 1px solid rgba(255,255,255,.20);
+    color: #a5d6a7; font-size: 12px; font-weight: 600;
+    letter-spacing: 1.8px; text-transform: uppercase;
+    padding: 6px 18px; border-radius: 100px;
+    margin-bottom: 28px;
+    backdrop-filter: blur(4px);
+  }
+  .hero-badge::before {
+    content: ''; width: 8px; height: 8px; border-radius: 50%;
+    background: var(--green-lt);
+    animation: pulse 2s infinite;
+  }
+  @keyframes pulse {
+    0%,100% { opacity: 1; transform: scale(1); }
+    50% { opacity: .5; transform: scale(1.4); }
+  }
+
+  .hero-title {
+    font-family: 'Sora', sans-serif;
+    font-size: clamp(2.8rem, 7vw, 5.2rem);
+    font-weight: 800; color: #fff;
+    line-height: 1.05; letter-spacing: -1px;
+    margin-bottom: 8px;
+  }
+  .hero-title .accent {
+    background: linear-gradient(90deg, #81d4fa, #a5d6a7);
+    -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  .hero-sub {
+    font-family: 'Sora', sans-serif;
+    font-size: clamp(1.1rem, 2.5vw, 1.55rem);
+    color: rgba(255,255,255,.70);
+    font-weight: 300; margin-bottom: 20px;
+    letter-spacing: .5px;
+  }
+
+  .hero-tagline {
+    font-size: 15px; color: rgba(255,255,255,.55);
+    max-width: 560px; margin: 0 auto 44px;
+  }
+
+  .hero-btns { display: flex; gap: 16px; justify-content: center; flex-wrap: wrap; }
+
+  .btn-primary {
+    display: inline-flex; align-items: center; gap: 8px;
+    background: linear-gradient(135deg, var(--green-lt), var(--teal));
+    color: #fff; text-decoration: none;
+    padding: 15px 34px; border-radius: 10px;
+    font-family: 'Sora', sans-serif; font-weight: 700; font-size: 15px;
+    letter-spacing: .3px;
+    box-shadow: 0 8px 28px rgba(46,125,50,.45);
+    transition: transform .25s, box-shadow .25s;
+  }
+  .btn-primary:hover { transform: translateY(-3px); box-shadow: 0 14px 36px rgba(46,125,50,.55); }
+
+  .btn-outline {
+    display: inline-flex; align-items: center; gap: 8px;
+    border: 2px solid rgba(255,255,255,.35);
+    color: #fff; text-decoration: none;
+    padding: 13px 30px; border-radius: 10px;
+    font-weight: 600; font-size: 15px;
+    transition: background .25s, border-color .25s, transform .25s;
+  }
+  .btn-outline:hover { background: rgba(255,255,255,.10); border-color: rgba(255,255,255,.6); transform: translateY(-2px); }
+
+  .hero-stats {
+    display: flex; gap: 40px; justify-content: center;
+    margin-top: 60px; flex-wrap: wrap;
+  }
+  .stat { text-align: center; }
+  .stat-num {
+    font-family: 'Sora', sans-serif; font-size: 2rem; font-weight: 800; color: #fff;
+    background: linear-gradient(90deg, #81d4fa, #a5d6a7);
+    -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+  .stat-label { font-size: 12px; color: rgba(255,255,255,.5); text-transform: uppercase; letter-spacing: 1px; }
+
+  /* ── SECTIONS SHARED ── */
+  section { padding: 96px 5%; }
+  .section-label {
+    display: inline-block;
+    font-size: 11px; font-weight: 700; letter-spacing: 2.5px;
+    text-transform: uppercase; color: var(--teal);
+    margin-bottom: 14px;
+  }
+  .section-title {
+    font-family: 'Sora', sans-serif;
+    font-size: clamp(1.7rem, 3.5vw, 2.6rem);
+    font-weight: 800; color: var(--navy); line-height: 1.15;
+    margin-bottom: 18px;
+  }
+  .section-body {
+    font-size: 16px; color: var(--muted); max-width: 640px; line-height: 1.8;
+  }
+  .container { max-width: 1140px; margin: 0 auto; }
+
+  /* ── NOSOTROS ── */
+  #nosotros { background: var(--gray); }
+  .nosotros-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 56px; align-items: center;
+  }
+  .nosotros-visual {
+    position: relative;
+  }
+  .nos-card {
+    background: var(--white);
+    border-radius: var(--radius);
+    padding: 32px;
+    box-shadow: var(--shadow);
+    border-left: 4px solid var(--blue-md);
+  }
+  .nos-card + .nos-card { margin-top: 16px; border-left-color: var(--teal); }
+  .nos-card-icon {
+    width: 44px; height: 44px; border-radius: 10px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 22px; margin-bottom: 14px;
+  }
+  .icon-blue { background: var(--sky); }
+  .icon-green { background: var(--mint); }
+  .nos-card h4 {
+    font-family: 'Sora', sans-serif; font-weight: 700;
+    font-size: 15px; color: var(--navy); margin-bottom: 8px;
+  }
+  .nos-card p { font-size: 14px; color: var(--muted); line-height: 1.7; }
+
+  .keywords {
+    display: flex; flex-wrap: wrap; gap: 8px; margin-top: 28px;
+  }
+  .kw {
+    background: var(--sky);
+    color: var(--blue);
+    padding: 5px 14px; border-radius: 100px;
+    font-size: 12px; font-weight: 600; letter-spacing: .3px;
+  }
+  .kw.green { background: var(--mint); color: var(--green); }
+
+  /* ── SERVICIOS ── */
+  #servicios { background: var(--white); }
+  .servicios-header { text-align: center; margin-bottom: 56px; }
+  .servicios-header .section-body { margin: 0 auto; }
+
+  .tabs {
+    display: flex; gap: 0; justify-content: center; margin-bottom: 40px;
+    background: var(--gray); border-radius: 12px; padding: 6px;
+    max-width: 400px; margin: 0 auto 40px;
+  }
+  .tab-btn {
+    flex: 1; padding: 12px 20px; border: none; cursor: pointer;
+    background: transparent; font-family: 'Sora', sans-serif;
+    font-weight: 700; font-size: 14px; color: var(--muted);
+    border-radius: 9px; transition: all .25s;
+  }
+  .tab-btn.active {
+    background: var(--navy); color: #fff;
+    box-shadow: 0 4px 12px rgba(13,43,78,.25);
+  }
+
+  .tab-content { display: none; }
+  .tab-content.active { display: block; }
+
+  .services-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+    gap: 20px;
+  }
+  .service-card {
+    background: var(--gray);
+    border-radius: var(--radius);
+    padding: 28px 24px;
+    border: 1.5px solid var(--border);
+    transition: all .3s;
+    position: relative; overflow: hidden;
+  }
+  .service-card::before {
+    content: '';
+    position: absolute; top: 0; left: 0; right: 0; height: 3px;
+    background: linear-gradient(90deg, var(--blue-md), var(--teal));
+    transform: scaleX(0); transition: transform .3s;
+  }
+  .service-card:hover { border-color: var(--blue-md); transform: translateY(-4px); box-shadow: var(--shadow); }
+  .service-card:hover::before { transform: scaleX(1); }
+  .svc-icon { font-size: 28px; margin-bottom: 14px; }
+  .svc-name {
+    font-family: 'Sora', sans-serif; font-weight: 700;
+    font-size: 14px; color: var(--navy); margin-bottom: 8px;
+    text-transform: uppercase; letter-spacing: .5px;
+  }
+  .svc-desc { font-size: 13px; color: var(--muted); line-height: 1.6; }
+
+  /* ── MISIÓN / VISIÓN ── */
+  #mision { background: var(--navy); }
+  .mv-grid {
+    display: grid; grid-template-columns: 1fr 1fr; gap: 40px;
+  }
+  .mv-card {
+    background: rgba(255,255,255,.06);
+    border: 1px solid rgba(255,255,255,.10);
+    border-radius: 18px; padding: 44px 40px;
+    position: relative; overflow: hidden;
+  }
+  .mv-card::before {
+    content: '';
+    position: absolute; top: 0; right: 0;
+    width: 180px; height: 180px; border-radius: 50%;
+    background: rgba(255,255,255,.04);
+    transform: translate(50%, -50%);
+  }
+  .mv-num {
+    font-family: 'Sora', sans-serif; font-weight: 800;
+    font-size: 72px; color: rgba(255,255,255,.06);
+    position: absolute; top: 20px; right: 28px;
+    line-height: 1; user-select: none;
+  }
+  .mv-label {
+    font-size: 11px; font-weight: 700; letter-spacing: 2.5px;
+    text-transform: uppercase; color: #a5d6a7;
+    margin-bottom: 16px;
+  }
+  .mv-title {
+    font-family: 'Sora', sans-serif;
+    font-size: 1.55rem; font-weight: 700; color: #fff;
+    margin-bottom: 20px;
+  }
+  .mv-text { font-size: 15px; color: rgba(255,255,255,.65); line-height: 1.8; }
+
+  /* ── DIFERENCIAL ── */
+  #diferencial { background: var(--gray); }
+  .dif-inner {
+    display: grid; grid-template-columns: 1fr 1fr; gap: 56px; align-items: center;
+  }
+  .dif-pillars { display: flex; flex-direction: column; gap: 20px; }
+  .dif-pill {
+    display: flex; gap: 18px; align-items: flex-start;
+    background: var(--white); border-radius: var(--radius);
+    padding: 22px 24px; border: 1.5px solid var(--border);
+    transition: border-color .25s, transform .25s;
+  }
+  .dif-pill:hover { border-color: var(--teal); transform: translateX(4px); }
+  .dif-icon {
+    width: 44px; height: 44px; border-radius: 10px; flex-shrink: 0;
+    background: linear-gradient(135deg, var(--blue-md), var(--teal));
+    display: flex; align-items: center; justify-content: center;
+    font-size: 20px; color: #fff;
+  }
+  .dif-pill h4 { font-family: 'Sora', sans-serif; font-weight: 700; font-size: 14px; color: var(--navy); margin-bottom: 4px; }
+  .dif-pill p { font-size: 13px; color: var(--muted); line-height: 1.6; }
+
+  /* ── CTA ── */
+  #cta {
+    background: linear-gradient(135deg, var(--navy) 0%, var(--blue) 60%, var(--teal) 100%);
+    text-align: center; padding: 96px 5%;
+  }
+  #cta .section-title { color: #fff; }
+  #cta .section-body { color: rgba(255,255,255,.70); margin: 0 auto 40px; max-width: 560px; }
+
+  .contact-cards {
+    display: flex; gap: 20px; justify-content: center; flex-wrap: wrap;
+    margin-top: 44px;
+  }
+  .contact-card {
+    background: rgba(255,255,255,.12);
+    border: 1px solid rgba(255,255,255,.20);
+    border-radius: var(--radius); padding: 24px 32px;
+    color: #fff; text-decoration: none;
+    display: flex; align-items: center; gap: 14px;
+    backdrop-filter: blur(8px);
+    transition: background .25s, transform .25s;
+    min-width: 200px;
+  }
+  .contact-card:hover { background: rgba(255,255,255,.20); transform: translateY(-3px); }
+  .cc-icon { font-size: 26px; }
+  .cc-label { font-size: 11px; text-transform: uppercase; letter-spacing: 1.5px; opacity: .65; margin-bottom: 2px; }
+  .cc-value { font-family: 'Sora', sans-serif; font-weight: 700; font-size: 14px; }
+
+  /* ── FOOTER ── */
+  footer {
+    background: #091d35;
+    color: rgba(255,255,255,.45);
+    text-align: center;
+    padding: 28px 5%;
+    font-size: 13px;
+    border-top: 1px solid rgba(255,255,255,.06);
+  }
+  footer strong { color: rgba(255,255,255,.8); }
+
+  /* ── ANIMATIONS ── */
+  .fade-up {
+    opacity: 0; transform: translateY(30px);
+    transition: opacity .65s ease, transform .65s ease;
+  }
+  .fade-up.visible { opacity: 1; transform: translateY(0); }
+
+  /* ── RESPONSIVE ── */
+  @media (max-width: 900px) {
+    .nosotros-grid, .mv-grid, .dif-inner { grid-template-columns: 1fr; gap: 32px; }
+    .nav-links { display: none; }
+    .hamburger { display: flex; }
+    .hero-stats { gap: 28px; }
+  }
+  @media (max-width: 600px) {
+    section { padding: 72px 5%; }
+    .btn-primary, .btn-outline { padding: 13px 24px; font-size: 14px; }
+    .mv-card { padding: 32px 24px; }
+  }
+
+  /* scrollbar */
+  ::-webkit-scrollbar { width: 6px; }
+  ::-webkit-scrollbar-track { background: var(--gray); }
+  ::-webkit-scrollbar-thumb { background: var(--blue-md); border-radius: 3px; }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav id="navbar">
+  <a href="#hero" class="nav-brand">
+    <div class="nav-logo-circle">PG</div>
+    <div class="nav-brand-text">
+      <span class="t1">Plena Gestión</span>
+      <span class="t2">Lo hacemos simple</span>
+    </div>
+  </a>
+  <ul class="nav-links">
+    <li><a href="#nosotros">Nosotros</a></li>
+    <li><a href="#servicios">Servicios</a></li>
+    <li><a href="#mision">Misión & Visión</a></li>
+    <li><a href="#diferencial">Diferencial</a></li>
+    <li><a href="#cta" class="nav-cta">Contacto</a></li>
+  </ul>
+  <div class="hamburger" id="ham" onclick="toggleMenu()">
+    <span></span><span></span><span></span>
+  </div>
+</nav>
+
+<div class="mobile-menu" id="mobileMenu">
+  <a href="#nosotros" onclick="closeMenu()">Nosotros</a>
+  <a href="#servicios" onclick="closeMenu()">Servicios</a>
+  <a href="#mision" onclick="closeMenu()">Misión & Visión</a>
+  <a href="#diferencial" onclick="closeMenu()">Diferencial</a>
+  <a href="#cta" onclick="closeMenu()" style="color:#a5d6a7;font-weight:700;">Contacto →</a>
+</div>
+
+<!-- HERO -->
+<section id="hero">
+  <div class="hero-bg-shapes">
+    <div class="hero-shape hs1"></div>
+    <div class="hero-shape hs2"></div>
+    <div class="hero-shape hs3"></div>
+  </div>
+  <div class="hero-content">
+    <div class="hero-badge">Especialistas en gestión de consorcios</div>
+    <h1 class="hero-title">
+      Lo Hacemos<br><span class="accent">Simple</span>
+    </h1>
+    <p class="hero-sub">Soluciones integrales para administradores de consorcios</p>
+    <p class="hero-tagline">Gestionamos tus trámites, renovaciones, DDJJ, obleas y más — para que vos te enfoques en administrar.</p>
+    <div class="hero-btns">
+      <a href="#servicios" class="btn-primary">Ver Servicios ↓</a>
+      <a href="#cta" class="btn-outline">Hablemos hoy</a>
+    </div>
+    <div class="hero-stats">
+      <div class="stat">
+        <div class="stat-num">CABA</div>
+        <div class="stat-label">y Provincia</div>
+      </div>
+      <div class="stat">
+        <div class="stat-num">100%</div>
+        <div class="stat-label">Trámites cubiertos</div>
+      </div>
+      <div class="stat">
+        <div class="stat-num">PyME</div>
+        <div class="stat-label">Trato personalizado</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- NOSOTROS -->
+<section id="nosotros">
+  <div class="container">
+    <div class="nosotros-grid">
+      <div class="fade-up">
+        <span class="section-label">Quiénes somos</span>
+        <h2 class="section-title">Tu equipo de gestoría<br>en plena acción</h2>
+        <p class="section-body">
+          Somos una PyME en crecimiento dedicada a brindar soluciones integrales para administradores de consorcios, acompañándolos en la gestión diaria con un servicio ágil, profesional y personalizado.
+        </p>
+        <p class="section-body" style="margin-top:16px;">
+          Entendemos que cada vencimiento, denuncia o intimación importa. Por eso actuamos con velocidad y precisión para que ningún trámite quede sin atención.
+        </p>
+        <div class="keywords">
+          <span class="kw">Gestoría</span>
+          <span class="kw">Administración</span>
+          <span class="kw green">Consorcios</span>
+          <span class="kw green">Plena gestión</span>
+          <span class="kw">Trámites</span>
+          <span class="kw green">Vencimientos</span>
+        </div>
+      </div>
+      <div class="nosotros-visual fade-up" style="transition-delay:.15s">
+        <div class="nos-card">
+          <div class="nos-card-icon icon-blue">🏢</div>
+          <h4>Administrador como protagonista</h4>
+          <p>Acompañamos al administrador de consorcio en cada etapa de su gestión, garantizando cumplimiento sin demoras ni multas.</p>
+        </div>
+        <div class="nos-card">
+          <div class="nos-card-icon icon-green">🤝</div>
+          <h4>Aliados estratégicos</h4>
+          <p>Más que una gestoría: somos un equipo comprometido con el crecimiento de cada consorcio que representás.</p>
+        </div>
+        <div class="nos-card" style="border-left-color: var(--navy);">
+          <div class="nos-card-icon icon-blue">⚡</div>
+          <h4>Respuestas sin vueltas</h4>
+          <p>Información clara, seguimiento permanente y cero burocracia innecesaria. Cada denuncia o sanción, resuelta.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SERVICIOS -->
+<section id="servicios">
+  <div class="container">
+    <div class="servicios-header fade-up">
+      <span class="section-label">Nuestros servicios</span>
+      <h2 class="section-title">Todos los productos que tu gestión necesita</h2>
+      <p class="section-body">Cubrimos todos los trámites para administradores de consorcios en CABA y Provincia de Buenos Aires. Sin intermediarios. Sin vencimientos perdidos.</p>
+    </div>
+
+    <div class="tabs">
+      <button class="tab-btn active" onclick="switchTab('caba', this)">🏙 CABA</button>
+      <button class="tab-btn" onclick="switchTab('pcia', this)">🌿 Provincia</button>
+    </div>
+
+    <div class="tab-content active" id="tab-caba">
+      <div class="services-grid">
+        <div class="service-card fade-up">
+          <div class="svc-icon">📋</div>
+          <div class="svc-name">DDJJ</div>
+          <div class="svc-desc">Declaraciones juradas completas y presentadas en tiempo. Evitá sanciones y multas por vencimiento.</div>
+        </div>
+        <div class="service-card fade-up" style="transition-delay:.05s">
+          <div class="svc-icon">🎓</div>
+          <div class="svc-name">Renovación de Matrícula</div>
+          <div class="svc-desc">Renovación de matrícula de administrador. Gestionamos toda la documentación y el trámite completo.</div>
+        </div>
+        <div class="service-card fade-up" style="transition-delay:.10s">
+          <div class="svc-icon">🪧</div>
+          <div class="svc-name">Obleas</div>
+          <div class="svc-desc">Obleas reglamentarias para los consorcios que administrás, gestionadas con rapidez y sin complicaciones.</div>
+        </div>
+        <div class="service-card fade-up" style="transition-delay:.15s">
+          <div class="svc-icon">🔗</div>
+          <div class="svc-name">Vinculaciones</div>
+          <div class="svc-desc">Tramitamos vinculaciones ante los organismos correspondientes de manera ágil y transparente.</div>
+        </div>
+        <div class="service-card fade-up" style="transition-delay:.20s">
+          <div class="svc-icon">📝</div>
+          <div class="svc-name">Registro Empleadores</div>
+          <div class="svc-desc">Alta y gestión en el Registro de Empleadores, garantizando el cumplimiento normativo del consorcio.</div>
+        </div>
+        <div class="service-card fade-up" style="transition-delay:.25s">
+          <div class="svc-icon">⚡</div>
+          <div class="svc-name">Medición Puesta a Tierra</div>
+          <div class="svc-desc">Coordinamos la medición y certificación de puesta a tierra para el consorcio, evitando intimaciones.</div>
+        </div>
+        <div class="service-card fade-up" style="transition-delay:.30s">
+          <div class="svc-icon">🛡️</div>
+          <div class="svc-name">Seguros Integrales</div>
+          <div class="svc-desc">Coberturas completas para el consorcio. Asesoramos y gestionamos la póliza más adecuada.</div>
+        </div>
+        <div class="service-card fade-up" style="transition-delay:.35s">
+          <div class="svc-icon">📦</div>
+          <div class="svc-name">Depo-Doc</div>
+          <div class="svc-desc">Depósito y gestión documental para el consorcio. Toda la documentación ordenada y disponible.</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="tab-content" id="tab-pcia">
+      <div class="services-grid">
+        <div class="service-card fade-up">
+          <div class="svc-icon">📋</div>
+          <div class="svc-name">DDJJ</div>
+          <div class="svc-desc">Declaraciones juradas ante el RPAC y organismos provinciales. Cumplimiento sin riesgos de sanción.</div>
+        </div>
+        <div class="service-card fade-up" style="transition-delay:.05s">
+          <div class="svc-icon">🎓</div>
+          <div class="svc-name">Renovación de Matrícula</div>
+          <div class="svc-desc">Tramitamos la renovación de matrícula provincial para administradores. Sin demoras ni trabas burocráticas.</div>
+        </div>
+        <div class="service-card fade-up" style="transition-delay:.10s">
+          <div class="svc-icon">⚡</div>
+          <div class="svc-name">Medición Puesta a Tierra</div>
+          <div class="svc-desc">Certificación eléctrica para consorcios en provincia. Coordinamos el servicio técnico y la documentación.</div>
+        </div>
+        <div class="service-card fade-up" style="transition-delay:.15s">
+          <div class="svc-icon">✅</div>
+          <div class="svc-name">Certificado de Acreditación</div>
+          <div class="svc-desc">Gestión completa del certificado de acreditación provincial. Tu consorcio al día con los requisitos legales.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- MISIÓN / VISIÓN -->
+<section id="mision">
+  <div class="container">
+    <div class="mv-grid">
+      <div class="mv-card fade-up">
+        <div class="mv-num">01</div>
+        <div class="mv-label">Misión</div>
+        <h3 class="mv-title">Facilitar tu gestión<br>integral como administrador</h3>
+        <p class="mv-text">
+          Brindar soluciones integrales, ágiles y confiables a los administradores de consorcios, acompañándolos en la gestión diaria de sus obligaciones administrativas, documentales, legales y operativas. Simplificamos procesos, optimizamos tiempos y garantizamos un servicio eficiente, transparente y de calidad.
+        </p>
+      </div>
+      <div class="mv-card fade-up" style="transition-delay:.15s">
+        <div class="mv-num">02</div>
+        <div class="mv-label">Visión</div>
+        <h3 class="mv-title">Referentes en apoyo<br>al sector consorcial</h3>
+        <p class="mv-text">
+          Ser una empresa referente en servicios de apoyo para administradores de consorcios, reconocida por la excelencia, la confianza y la capacidad de resolver las necesidades del sector de manera profesional, moderna y personalizada. Consolidarnos como el aliado estratégico que cada administrador elige.
+        </p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- DIFERENCIAL -->
+<section id="diferencial">
+  <div class="container">
+    <div class="dif-inner">
+      <div class="fade-up">
+        <span class="section-label">¿Por qué elegirnos?</span>
+        <h2 class="section-title">Un aliado que crece<br>junto a vos</h2>
+        <p class="section-body">
+          Nuestro objetivo es ser un aliado estratégico para los administradores, brindando respuestas claras, seguimiento permanente y soluciones adaptadas a cada necesidad. Como empresa en expansión, buscamos crecer junto a nuestros clientes, manteniendo siempre la calidad humana, la responsabilidad y la excelencia en el servicio.
+        </p>
+      </div>
+      <div class="dif-pillars fade-up" style="transition-delay:.15s">
+        <div class="dif-pill">
+          <div class="dif-icon">🎯</div>
+          <div>
+            <h4>Seguimiento permanente</h4>
+            <p>Sabemos cuándo vence cada trámite, renovación o certificado. Ninguna intimación pasa desapercibida.</p>
+          </div>
+        </div>
+        <div class="dif-pill">
+          <div class="dif-icon">💬</div>
+          <div>
+            <h4>Respuestas claras y sin rodeos</h4>
+            <p>Sin tecnicismos innecesarios. Te explicamos el estado de cada gestión en tiempo real.</p>
+          </div>
+        </div>
+        <div class="dif-pill">
+          <div class="dif-icon">🔄</div>
+          <div>
+            <h4>Soluciones adaptadas</h4>
+            <p>Cada consorcio tiene sus particularidades. Diseñamos la solución específica para tu cartera.</p>
+          </div>
+        </div>
+        <div class="dif-pill">
+          <div class="dif-icon">🌱</div>
+          <div>
+            <h4>PyME comprometida</h4>
+            <p>Crecemos junto a nuestros clientes. Tu éxito como administrador es nuestro objetivo diario.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<section id="cta">
+  <div class="container">
+    <div class="fade-up">
+      <span class="section-label" style="color:#a5d6a7;">Contacto</span>
+      <h2 class="section-title">¿Listo para una gestión<br>plena y sin complicaciones?</h2>
+      <p class="section-body">
+        Contactanos hoy y descubrí cómo podemos simplificar la administración de tus consorcios, cubrir todos tus trámites y ser el aliado estratégico que necesitás.
+      </p>
+      <a href="https://wa.me/5491127836414" target="_blank" class="btn-primary" style="margin: 0 auto; display:inline-flex;">
+        📱 Escribinos por WhatsApp
+      </a>
+    </div>
+    <div class="contact-cards">
+      <a href="https://wa.me/5491127836414" target="_blank" class="contact-card">
+        <div class="cc-icon">📱</div>
+        <div>
+          <div class="cc-label">WhatsApp</div>
+          <div class="cc-value">11 2783-6414</div>
+        </div>
+      </a>
+      <a href="mailto:vrobledo.plenagestion@gmail.com" class="contact-card">
+        <div class="cc-icon">✉️</div>
+        <div>
+          <div class="cc-label">Email</div>
+          <div class="cc-value">vrobledo.plenagestion</div>
+        </div>
+      </a>
+      <a href="mailto:maga.plenagestion@gmail.com" class="contact-card">
+        <div class="cc-icon">✉️</div>
+        <div>
+          <div class="cc-label">Email</div>
+          <div class="cc-value">maga.plenagestion</div>
+        </div>
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <p><strong>Plena Gestión</strong> · Soluciones integrales para administradores de consorcios · CABA y Provincia</p>
+  <p style="margin-top:6px;">© 2025 Plena Gestión · Todos los derechos reservados</p>
+</footer>
+
+<script>
+  // Nav scroll
+  window.addEventListener('scroll', () => {
+    document.getElementById('navbar').classList.toggle('scrolled', scrollY > 40);
+  });
+
+  // Mobile menu
+  function toggleMenu() {
+    document.getElementById('mobileMenu').classList.toggle('open');
+  }
+  function closeMenu() {
+    document.getElementById('mobileMenu').classList.remove('open');
+  }
+
+  // Tabs
+  function switchTab(id, btn) {
+    document.querySelectorAll('.tab-content').forEach(t => t.classList.remove('active'));
+    document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+    document.getElementById('tab-' + id).classList.add('active');
+    btn.classList.add('active');
+  }
+
+  // Fade-up on scroll
+  const obs = new IntersectionObserver((entries) => {
+    entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
+  }, { threshold: 0.12 });
+  document.querySelectorAll('.fade-up').forEach(el => obs.observe(el));
+</script>
+</body>
+</html>
